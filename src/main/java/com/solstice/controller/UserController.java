@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.solstice.bean.User;
 import com.solstice.exception.UserException;
 import com.solstice.service.UserService;
-import com.solstice.utils.JavaMailUtil;
+import com.solstice.utils.MailUtil;
 import com.solstice.utils.Utils;
 
 @Controller
@@ -92,7 +92,7 @@ public class UserController {
 			+request.getContextPath()+"/user/active?activeCode="
 			+ user.getActiveCode() + "\"></a>";
 			try {
-				JavaMailUtil.sendMail("账号激活", text,
+				MailUtil.sendMail("账号激活", text,
 						new String[] { user.getEmail() });
 			} catch (Exception e) {
 				// 出错处理
@@ -214,7 +214,7 @@ public class UserController {
 		String text ="你正在使用该邮箱找回密码，请点击下面的链接完成密码找回；如不是本人操作，请忽略"+System.getProperty("line.separator")+"<a href=\"http://localhost:8080"+request.getContextPath()+"/user/retrievePwd?email="
 				+ email + "&pwd=" + Utils.MD5(pwd)+ "\"></a>";
 		try {
-			JavaMailUtil.sendMail("找回密码", text, new String[] { email });
+			MailUtil.sendMail("找回密码", text, new String[] { email });
 		} catch (Exception e) {
 			// 出错处理
 			e.printStackTrace();

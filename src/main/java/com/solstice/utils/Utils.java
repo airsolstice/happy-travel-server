@@ -36,7 +36,6 @@ public class Utils {
 		}
 	}
 	/**
-	 * 判断obj是否不为null
 	 * @param obj
 	 * @return
 	 */

@@ -26,52 +26,52 @@ public class MapModelController {
 		try {
 			List<MapModel> models = (ArrayList<MapModel>) mapModelService
 					.getMapModelList(id);
-			result = new Result(ResultCode.SUCESS, "get contact success",
+			result = new Result(ResultCode.SUCESS, "获取用户好友列表",
 					models);
 		} catch (Exception e) {
-			result = new Result(ResultCode.FAIL, "get contact faild", null);
+			result = new Result(ResultCode.FAIL, "获取失败", null);
 			e.printStackTrace();
 		}
 
-		request.setAttribute("data", result.toString());
-		return "contact";
+		request.setAttribute("message", result.toString());
+		return "message";
 	}
 
-	@RequestMapping(value = "/contact")
+	@RequestMapping(value = "/message")
 	public String Contact() {
-		return "contact";
+		return "message";
 	}
 
 	@RequestMapping(value = "/add")
-	public String addModel(HttpServletRequest request, int id, int contactId,
-			String groupName) {
+	public String addModel(HttpServletRequest request, int id, int ugId,
+			String gName) {
 		Result result = null;
 		try {
-			String name = new String(groupName.getBytes("gbk"), "utf-8");
-			mapModelService.addMapModel(id, contactId, name);
-			result = new Result(ResultCode.SUCESS, "add success", null);
+			String name = new String(gName.getBytes("gbk"), "utf-8");
+			mapModelService.addMapModel(id, ugId, name);
+			result = new Result(ResultCode.SUCESS, "添加成功", null);
 		} catch (Exception e) {
-			result = new Result(ResultCode.FAIL, "add faild", null);
+			result = new Result(ResultCode.FAIL, "添加失败", null);
 			e.printStackTrace();
 		}
 
-		request.setAttribute("data", result.toString());
-		return "contact";
+		request.setAttribute("message", result.toString());
+		return "message";
 	}
 
 	@RequestMapping(value = "/delete")
 	public String delteteMapUser(HttpServletRequest request, int id,
-			int contactId) {
+			int ugId) {
 		Result result = null;
 		try {
-			mapModelService.deleteMapModel(id, contactId);
-			result = new Result(ResultCode.SUCESS, "delete success", null);
+			mapModelService.deleteMapModel(id, ugId);
+			result = new Result(ResultCode.SUCESS, "删除成功", null);
 		} catch (Exception e) {
-			result = new Result(ResultCode.FAIL, "delete faild", null);
+			result = new Result(ResultCode.FAIL, "删除失败", null);
 			e.printStackTrace();
 		}
-		request.setAttribute("data", result.toString());
-		return "contact";
+		request.setAttribute("message", result.toString());
+		return "message";
 	}
 
 	@RequestMapping(value = "/update")
@@ -79,14 +79,14 @@ public class MapModelController {
 			int contactId) {
 		Result result = null;
 		try {
-			result = new Result(ResultCode.SUCESS, "update success", null);
+			result = new Result(ResultCode.SUCESS, "更新成功", null);
 		} catch (Exception e) {
-			result = new Result(ResultCode.FAIL, "update faild", null);
+			result = new Result(ResultCode.FAIL, "更新失败", null);
 			e.printStackTrace();
 		}
 
-		request.setAttribute("data", result.toString());
-		return "contact";
+		request.setAttribute("message", result.toString());
+		return "message";
 
 	}
 
@@ -96,13 +96,13 @@ public class MapModelController {
 		Result result = null;
 		try {
 			mapModelService.moveMapModel(id, contactId, toGroup);
-			result = new Result(ResultCode.SUCESS, "move success", null);
+			result = new Result(ResultCode.SUCESS, "移动成功", null);
 		} catch (Exception e) {
-			result = new Result(ResultCode.FAIL, "move faild", null);
+			result = new Result(ResultCode.FAIL, "移动失败", null);
 			e.printStackTrace();
 		}
 
-		request.setAttribute("data", result.toString());
-		return "contact";
+		request.setAttribute("message", result.toString());
+		return "message";
 	}
 }

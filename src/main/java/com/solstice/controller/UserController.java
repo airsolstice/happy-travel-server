@@ -1,5 +1,7 @@
 package com.solstice.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -31,11 +33,11 @@ public class UserController {
 
 		Map<String, String> errors = new HashMap<String, String>();
 		// 用户名的判断
-		if (Utils.isEmpty(user.getUserName())) {
-			errors.put("userName", "用户名不能为null");
-		} else if (user.getUserName().trim().length() > 10
-				|| user.getUserName().trim().length() < 3) {
-			errors.put("userName", "用户名长度必须介于3~10之间");
+		if (Utils.isEmpty(user.getName())) {
+			errors.put("name", "用户名不能为null");
+		} else if (user.getName().trim().length() > 10
+				|| user.getName().trim().length() < 3) {
+			errors.put("name", "用户名长度必须介于3~10之间");
 		}
 		// 密码的判断
 		if (Utils.isEmpty(user.getPwd())) {
@@ -71,6 +73,7 @@ public class UserController {
 	public String regist(HttpServletRequest request, User user) {
 		// 补全代码
 		String activeCode = UUID.randomUUID().toString();
+		String localhost = "localhost";
 		user.setActiveCode(activeCode);
 		user.setPhone("18112345678");
 		Map<String, String> errors = verifyInput(user);
@@ -83,21 +86,22 @@ public class UserController {
 		}
 		// 调用service，验证用户名和邮箱是否已经被注册
 		try {
-			userService.findUserByUserName(user.getUserName());
+			userService.findUserByUserName(user.getName());
 			userService.findUserByEmail(user.getEmail());
 			userService.addUser(user);
+			//获取本地ip
+			try {
+				localhost = InetAddress.getLocalHost().getHostAddress();
+			} catch (UnknownHostException e) {}
+			
 			String text ="你正在使用该邮箱进行账号激活，请点击下面的链接完成激活；如不是本人操作，请忽略"
-			+System.getProperty("line.separator")
-			+ "<a href=\"http://localhost:8080"
+			+System.getProperty("line.separator","\n")
+			+ "<a href=\"http://"+localhost+":8080"
 			+request.getContextPath()+"/user/active?activeCode="
 			+ user.getActiveCode() + "\"></a>";
-			try {
-				MailUtil.sendMail("账号激活", text,
-						new String[] { user.getEmail() });
-			} catch (Exception e) {
-				// 出错处理
-				e.printStackTrace();
-			}
+			MailUtil.sendMail("账号激活", text,
+					new String[] { user.getEmail() });
+			
 		} catch (UserException e) {
 			e.printStackTrace();
 			// 保存错误信息
@@ -105,11 +109,13 @@ public class UserController {
 			// 保存用户信息
 			request.setAttribute("user", user);
 			return "regist";
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		request.setAttribute("message", "请到邮箱"+user.getEmail()
-				+"完成激活操作。如已操作请点击下面的链接去登录"+System.getProperty("line.separator")
-				+"<a href=\"http://localhost:8080"+request.getContextPath()
+				+"完成激活操作。如已操作请点击下面的链接去登录"+System.getProperty("line.separator","\n")
+				+"<a href=\"http://"+localhost+":8080"+request.getContextPath()
 				+"/user/toLogin>点击这里去登录</a>");
 		return "message";
 	}
@@ -143,11 +149,11 @@ public class UserController {
 	public String login(HttpServletRequest request, User user) {
 		Map<String, String> errors = new HashMap<String, String>();
 		// 用户名的判断
-		if (Utils.isEmpty(user.getUserName())) {
-			errors.put("userName", "用户名不能为null");
-		} else if (user.getUserName().trim().length() > 10
-				|| user.getUserName().trim().length() < 3) {
-			errors.put("userName", "用户名长度必须介于3~10之间");
+		if (Utils.isEmpty(user.getName())) {
+			errors.put("name", "用户名不能为null");
+		} else if (user.getName().trim().length() > 10
+				|| user.getName().trim().length() < 3) {
+			errors.put("name", "用户名长度必须介于3~10之间");
 		}
 		// 密码的判断
 		if (Utils.isEmpty(user.getPwd())) {
@@ -168,7 +174,6 @@ public class UserController {
 			User _user = userService.login(user);
 			// 保存账号信息到session域中
 			request.getSession().setAttribute("user", _user);
-			
 			return "index";
 		} catch (UserException e) {
 			request.setAttribute("error", e.getMessage());
@@ -211,7 +216,7 @@ public class UserController {
 			request.setAttribute("email", email);
 			return "forgetpwd";
 		}
-		String text ="你正在使用该邮箱找回密码，请点击下面的链接完成密码找回；如不是本人操作，请忽略"+System.getProperty("line.separator")+"<a href=\"http://localhost:8080"+request.getContextPath()+"/user/retrievePwd?email="
+		String text ="你正在使用该邮箱找回密码，请点击下面的链接完成密码找回；如不是本人操作，请忽略"+System.getProperty("line.separator","\n")+"<a href=\"http://localhost:8080"+request.getContextPath()+"/user/retrievePwd?email="
 				+ email + "&pwd=" + Utils.MD5(pwd)+ "\"></a>";
 		try {
 			MailUtil.sendMail("找回密码", text, new String[] { email });

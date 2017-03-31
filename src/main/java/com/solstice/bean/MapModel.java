@@ -3,10 +3,9 @@ package com.solstice.bean;
 import com.alibaba.fastjson.JSONObject;
 
 public class MapModel {
-	//用户id
 	private int id;
 	//好友id
-	private int contactId;
+	private int ugId;
 	//好友所在分组名称
 	private String groupName;
 	//好友名称
@@ -18,17 +17,18 @@ public class MapModel {
 	//好友定位的纬度
 	private double lng;
 	
-	public int getContactId() {
-		return contactId;
-	}
-	public void setContactId(int contactId) {
-		this.contactId = contactId;
-	}
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getUgId() {
+		return ugId;
+	}
+	public void setUgId(int ugId) {
+		this.ugId = ugId;
 	}
 	public String getGroupName() {
 		return groupName;

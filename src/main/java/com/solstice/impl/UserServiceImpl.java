@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
 	public User login(User user) throws UserException {
 		// 根据账号查找用户
-		User _user = userMapper.findUserByUserName(user.getUserName());
+		User _user = userMapper.findUserByUserName(user.getName());
 
 		// 账号不存在
 		if (null == _user) {

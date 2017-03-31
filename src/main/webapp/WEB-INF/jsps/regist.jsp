@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <div><font color="red">${error }</font></div>
     <form action="<c:url value ='/user/regist'/>" method="post">
-    	用户名：<input type="text" id="userName" name="userName" value="${user.userName }"><font color="red">${errors.userName }</font><br>
+    	用户名：<input type="text" id="name" name="name" value="${user.name }"><font color="red">${errors.name }</font><br>
     	密  码：<input type="password" id="pwd" name="pwd" value=""><font color="red">${errors.pwd }</font><br>
     	email:<input type="text" id="email" name="email" value="${user.email }"><font color="red">${errors.email }</font><br>
     	<input type="submit" value="注册">

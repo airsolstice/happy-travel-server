@@ -9,13 +9,13 @@
 		SELECT * FROM tb_user WHERE name = #{name}
 	</select>
 	<insert id="addUser" parameterType="user">
-		INSERT INTO tb_user(name,pwd,activeCode,email,sex,phone)
-		VALUES(#{name},#{pwd},#{activeCode},#{email},#{sex},#{phone})
+		INSERT INTO tb_user(id,name,pwd,active_code,email,sex,phone)
+		VALUES(#{email},#{name},#{pwd},#{activeCode},#{email},#{sex},#{phone})
 	</insert>
-	<select id="findIdByCode" parameterType="string" resultType="int">
-		SELECT id FROM tb_user WHERE activeCode=#{activeCode}
+	<select id="findIdByCode" parameterType="string" resultType="string">
+		SELECT id FROM tb_user WHERE active_code=#{activeCode}
 	</select>
-	<update id="active" parameterType="int">
+	<update id="active" parameterType="string">
 		UPDATE tb_user SET status = 1 WHERE id = #{id}
 	</update>
 	<update id="updatePwd" parameterType="user">

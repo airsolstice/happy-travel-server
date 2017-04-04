@@ -3,14 +3,15 @@ package com.solstice.bean;
 
 
 public class User {
-	private int id;
+	//在移动端中，使用手机号，在网页上使用邮箱
+	private String id;
 	//用户名
 	private String name;
 	//密码
 	private String pwd;
 	//邮箱
 	private String email;
-	//性别 1男2女
+	//0-保密，1-男，2-女
 	private int sex;
 	//手机号码
 	private String phone;
@@ -22,17 +23,17 @@ public class User {
 	public User(){}
 	
 	//用户个人信息获取
-	public User(int id, String name, String email, int sex, String phone){
+	public User(String id, String name, String email, int sex, String phone){
 		this.id = id;
 		this.name = name;
 		this.sex = sex;
 		this.phone = phone;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getStatus() {

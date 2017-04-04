@@ -128,7 +128,7 @@ public class UserController {
 	@RequestMapping("/active")
 	public String active(String activeCode) {
 		try {
-			Integer id = userService.findIdByCode(activeCode);
+			String id = userService.findIdByCode(activeCode);
 			userService.active(id);
 		} catch (UserException e) {
 			// 激活失败处理

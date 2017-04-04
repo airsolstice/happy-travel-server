@@ -6,7 +6,7 @@ public interface UserMapper {
 	public User findUserByEmail(String email);
 	public User findUserByUserName(String name);
 	public void addUser(User user);
-	public Integer findIdByCode(String activeCode);
-	public void active(Integer id);
+	public String findIdByCode(String activeCode);
+	public void active(String id);
 	public void updatePwd(User user);
 }

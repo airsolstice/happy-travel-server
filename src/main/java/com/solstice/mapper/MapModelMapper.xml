@@ -4,11 +4,11 @@
 	<resultMap id="mapModelMap" type="mapModel">
         <result column="id" jdbcType="INTEGER" property="id"/>
         <result column="ugId" jdbcType="INTEGER" property="ugId"/>
-        <result column="gName" jdbcType="String" property="groupName"/>
-        <result column="name" jdbcType="String" property="userName"/>
-        <result column="headUrl" jdbcType="String" property="headUrl"/>
-        <result column="lat" jdbcType="Double" property="lat"/>
-        <result column="lng" jdbcType="Double" property="lng"/>
+        <result column="gName" jdbcType="CHAR" property="groupName"/>
+        <result column="name" jdbcType="CHAR" property="userName"/>
+        <result column="headUrl" jdbcType="CHAR" property="headUrl"/>
+        <result column="lat" jdbcType="DOUBLE" property="lat"/>
+        <result column="lng" jdbcType="DOUBLE" property="lng"/>
     </resultMap>
 
 	<select id="getMapModelList" resultMap="mapModelMap" parameterType="int" >

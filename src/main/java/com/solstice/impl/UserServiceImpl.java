@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据激活码查找id
 	 */
-	public Integer findIdByCode(String activeCode) throws UserException {
-		Integer id = userMapper.findIdByCode(activeCode);
+	public String findIdByCode(String activeCode) throws UserException {
+		String id = userMapper.findIdByCode(activeCode);
 		if (id == null)
 			throw new UserException("激活码已失效，请重新注册");
 		return id;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据id激活账号
 	 */
-	public void active(Integer id) throws UserException {
+	public void active(String id) throws UserException {
 		userMapper.active(id);
 	}
 
@@ -97,4 +97,6 @@ public class UserServiceImpl implements UserService {
 		} else
 			throw new UserException("该邮箱未注册");
 	}
+
+
 }

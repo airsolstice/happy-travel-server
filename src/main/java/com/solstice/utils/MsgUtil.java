@@ -37,14 +37,5 @@ public class MsgUtil {
         System.out.println(result);  
         post.releaseConnection();  
 	}
-	
-	@Test
-	public void testMsg(){
-		try {
-			sendMsg("hello, this is a msg from smsWebChina", "18140049361");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 }

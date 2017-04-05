@@ -2,10 +2,11 @@ package com.solstice.bean;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class MapModel {
-	private int id;
+public class MapUser {
+	//在移动端中，使用手机号，在网页上使用邮箱
+	private String id;
 	//好友id
-	private int ugId;
+	private String ugId;
 	//好友所在分组名称
 	private String groupName;
 	//好友名称
@@ -18,16 +19,16 @@ public class MapModel {
 	private double lng;
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public int getUgId() {
+	public String getUgId() {
 		return ugId;
 	}
-	public void setUgId(int ugId) {
+	public void setUgId(String ugId) {
 		this.ugId = ugId;
 	}
 	public String getGroupName() {

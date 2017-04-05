@@ -9,23 +9,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.solstice.bean.MapModel;
+import com.solstice.bean.MapUser;
 import com.solstice.bean.Result;
 import com.solstice.bean.ResultCode;
-import com.solstice.service.MapModelService;
+import com.solstice.service.MapUserService;
 
 @Controller
 @RequestMapping(value = "/map")
-public class MapModelController {
+public class MapUserController {
 	@Autowired
-	private MapModelService mapModelService;
+	private MapUserService mapUserService;
 
 	@RequestMapping(value = "/list")
-	public String getMapModelList(HttpServletRequest request, int id) {
+	public String getMapModelList(HttpServletRequest request, String id) {
 		Result result = null;
 		try {
-			List<MapModel> models = (ArrayList<MapModel>) mapModelService
-					.getMapModelList(id);
+			List<MapUser> models = (ArrayList<MapUser>) mapUserService
+					.getMapUserList(id);
 			result = new Result(ResultCode.SUCESS, "获取用户好友列表",
 					models);
 		} catch (Exception e) {
@@ -43,12 +43,12 @@ public class MapModelController {
 	}
 
 	@RequestMapping(value = "/add")
-	public String addModel(HttpServletRequest request, int id, int ugId,
+	public String addModel(HttpServletRequest request, String id, String ugId,
 			String gName) {
 		Result result = null;
 		try {
 			String name = new String(gName.getBytes("gbk"), "utf-8");
-			mapModelService.addMapModel(id, ugId, name);
+			mapUserService.addMapUser(id, ugId, name);
 			result = new Result(ResultCode.SUCESS, "添加成功", null);
 		} catch (Exception e) {
 			result = new Result(ResultCode.FAIL, "添加失败", null);
@@ -60,11 +60,11 @@ public class MapModelController {
 	}
 
 	@RequestMapping(value = "/delete")
-	public String delteteMapUser(HttpServletRequest request, int id,
-			int ugId) {
+	public String delteteMapUser(HttpServletRequest request, String id,
+			String ugId) {
 		Result result = null;
 		try {
-			mapModelService.deleteMapModel(id, ugId);
+			mapUserService.deleteMapUser(id, ugId);
 			result = new Result(ResultCode.SUCESS, "删除成功", null);
 		} catch (Exception e) {
 			result = new Result(ResultCode.FAIL, "删除失败", null);
@@ -91,11 +91,11 @@ public class MapModelController {
 	}
 
 	@RequestMapping(value = "/move")
-	public String moveMapUser(HttpServletRequest request, int id,
-			int contactId, String toGroup) {
+	public String moveMapUser(HttpServletRequest request, String id,
+			String contactId, String toGroup) {
 		Result result = null;
 		try {
-			mapModelService.moveMapModel(id, contactId, toGroup);
+			mapUserService.moveMapUser(id, contactId, toGroup);
 			result = new Result(ResultCode.SUCESS, "移动成功", null);
 		} catch (Exception e) {
 			result = new Result(ResultCode.FAIL, "移动失败", null);

@@ -39,7 +39,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) throws Exception {
 		String requestUri = request.getRequestURI();
-		// uri中包含loginout
+		// uri中包含login out
 		if (requestUri.contains("loginOut")) {
 			// 让session失效
 			request.getSession().invalidate();

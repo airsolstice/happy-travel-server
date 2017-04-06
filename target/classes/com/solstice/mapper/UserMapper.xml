@@ -21,5 +21,4 @@
 	<update id="updatePwd" parameterType="user">
 		UPDATE tb_user SET pwd = #{pwd} WHERE id = #{id}
 	</update>
-
 </mapper>

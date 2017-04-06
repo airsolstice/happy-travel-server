@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.solstice.mapper.OrderMapper">
+	<resultMap id="orderMap" type="order">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="CHAR" property="name"/>
+        <result column="detail" jdbcType="CHAR" property="detail"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="catalog" jdbcType="INTEGER" property="catalog"/>
+        <result column="url" jdbcType="CHAR" property="url"/>
+        <result column="add_time" jdbcType="DATE" property="addTime"/>
+    </resultMap>
+	<select id="getGoodsList" resultMap="goodsMap" >
+		SELECT * FROM tb_goods
+	</select>
+	<select id="getGoodsListByCatalog" resultMap="goodsMap" parameterType="int" >
+		SELECT * FROM tb_goods WHERE catalog = #{catalog}
+	</select>
+	<select id="getCatalogGoodsTop10" resultMap="goodsMap" parameterType="int" >
+		SELECT * FROM tb_goods WHERE catalog = #{catalog} ORDER BY add_time DESC LIMIT 10
+	</select>
+	<select id="getCatalogGoodsPage" resultMap="goodsMap" >
+		SELECT * FROM tb_goods WHERE catalog = #{2} LIMIT #{0},#{1}
+	</select>
+	<select id="getCatalogGoodsSum"  parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM tb_goods WHERE catalog = #{catalog}
+	</select>
+	<select id="findGoodsByKey"  parameterType="string" resultType="goods">
+		SELECT * FROM tb_goods WHERE name LIKE #{key}
+	</select>	
+	<insert id="addGoods" parameterType="goods">
+		INSERT INTO tb_goods (name,detail,price,catalog,url,add_time) values
+		(#{name},#{detail},#{price},#{catalog},#{url},#{addTime})
+	</insert>
+	<delete id="deleteGoods" parameterType="int" >
+		DELET FROM tb_goods WHERE id = #{id}
+	</delete>
+	<update id="updateName" parameterType="goods">
+		UPDATE tb_goods SET name = #{name} WHERE id = #{id}
+	</update>
+	<update id="updateDetail" parameterType="goods">
+		UPDATE tb_goods SET detail = #{detail} WHERE id = #{id}
+	</update>
+	<update id="updatePrice" parameterType="goods">
+		UPDATE tb_goods SET price = #{price} WHERE id = #{id}
+	</update>
+	<update id="updateCatalog" parameterType="goods">
+		UPDATE tb_goods SET catalog = #{catalog} WHERE id = #{id}
+	</update>
+	<update id="updateUrl" parameterType="goods">
+		UPDATE tb_goods SET url = #{url} WHERE id = #{id}
+	</update>
+</mapper>

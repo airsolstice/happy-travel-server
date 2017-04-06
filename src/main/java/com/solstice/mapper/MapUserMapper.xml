@@ -2,16 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.solstice.mapper.MapUserMapper">
 	<resultMap id="mapUserMap" type="mapUser">
-        <result column="id" jdbcType="INTEGER" property="id"/>
-        <result column="ugId" jdbcType="INTEGER" property="ugId"/>
+        <result column="id" jdbcType="CHAR" property="id"/>
+        <result column="ugId" jdbcType="CHAR" property="ugId"/>
         <result column="gName" jdbcType="CHAR" property="groupName"/>
         <result column="name" jdbcType="CHAR" property="userName"/>
         <result column="headUrl" jdbcType="CHAR" property="headUrl"/>
         <result column="lat" jdbcType="DOUBLE" property="lat"/>
         <result column="lng" jdbcType="DOUBLE" property="lng"/>
     </resultMap>
-
-	<select id="getMapUserList" resultMap="mapUserMap" parameterType="int" >
+	<select id="getMapUserList" resultMap="mapUserMap" parameterType="string" >
 		SELECT a.id,c.ugId,c.gName,a.name,a.headUrl,a.lat,a.lng
 		FROM tb_user AS a,(SELECT b.ugId,b.gName FROM tb_user AS a
 		,tb_user_group AS b WHERE a.id= b.id AND a.id = #{id}) AS c WHERE a.id =c.ugId
@@ -20,7 +19,7 @@
 		INSERT INTO tb_user_group(ugId,id,gName)
 		VALUES(#{ugId},#{id},#{groupName})
 	</insert>
-	<delete id="deleteMapModel" parameterType="mapUser">
+	<delete id="deleteMapUser" parameterType="mapUser">
 		DELETE FROM tb_user_group WHERE id = #{id} AND ugId = #{ugId}
 	</delete>
 	<update id="updateMapUserGroupName" >

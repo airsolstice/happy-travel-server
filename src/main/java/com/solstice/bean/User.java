@@ -1,6 +1,8 @@
 
 package com.solstice.bean;
 
+import com.alibaba.fastjson.JSONObject;
+
 
 public class User {
 	//用户id，在移动端使用手机号，在web端使用邮箱
@@ -77,5 +79,10 @@ public class User {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	@Override
+	public String toString() {
+		return JSONObject.toJSONString(this);
 	}
 }

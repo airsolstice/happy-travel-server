@@ -3,9 +3,9 @@ package com.solstice.bean;
 import com.alibaba.fastjson.JSONObject;
 
 public class MapUser {
-	//在移动端中，使用手机号，在网页上使用邮箱
+	//当前登入的用户id，在移动端使用手机号，在web端使用邮箱
 	private String id;
-	//好友id
+	//好友的id，与id生成联合主键
 	private String ugId;
 	//好友所在分组名称
 	private String groupName;

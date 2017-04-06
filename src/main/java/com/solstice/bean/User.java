@@ -3,7 +3,7 @@ package com.solstice.bean;
 
 
 public class User {
-	//在移动端中，使用手机号，在网页上使用邮箱
+	//用户id，在移动端使用手机号，在web端使用邮箱
 	private String id;
 	//用户名
 	private String name;
@@ -15,7 +15,7 @@ public class User {
 	private int sex;
 	//手机号码
 	private String phone;
-	//激活状态 1:已激活 0:未激活
+	//激活状态 1-已激活 ，0-未激活
 	private int status;
 	//激活码
 	private String activeCode;

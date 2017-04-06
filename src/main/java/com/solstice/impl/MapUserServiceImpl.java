@@ -14,11 +14,11 @@ import com.solstice.service.MapUserService;
 @Service
 public class MapUserServiceImpl implements MapUserService {
 	@Autowired
-	MapUserMapper mapModelMapper;
+	MapUserMapper mapUserMapper;
 	
 	@Override
 	public List<MapUser> getMapUserList(String id)  {
-		return mapModelMapper.getMapUserList(id);
+		return mapUserMapper.getMapUserList(id);
 	}
 
 	@Override
@@ -28,32 +28,32 @@ public class MapUserServiceImpl implements MapUserService {
 			throw new UserException("分组名称不能为空");
 		}
 		
-		MapUser mapModel = new MapUser();
-		mapModel.setId(id);
-		mapModel.setUgId(ugId);
-		mapModel.setGroupName(groupName);
-		mapModelMapper.addMapUser(mapModel);
+		MapUser user = new MapUser();
+		user.setId(id);
+		user.setUgId(ugId);
+		user.setGroupName(groupName);
+		mapUserMapper.addMapUser(user);
 	}
 
 	@Override
 	public void deleteMapUser(String id, String ugId) {
-		MapUser mapModel = new MapUser();
-		mapModel.setId(id);
-		mapModel.setUgId(ugId);
-		mapModelMapper.deleteMapUser(mapModel);
+		MapUser user = new MapUser();
+		user.setId(id);
+		user.setUgId(ugId);
+		mapUserMapper.deleteMapUser(user);
 	}
 
 	@Override
 	public void updateMapUserGroupName(String id, String oldName, String newName) {
-		mapModelMapper.updateMapUserGroupName(id, oldName, newName);
+		mapUserMapper.updateMapUserGroupName(id, oldName, newName);
 	}
 	@Override
 	public void moveMapUser(String id, String ugId, String toGroup) {
-		MapUser mapModel = new MapUser();
-		mapModel.setId(id);
-		mapModel.setUgId(ugId);
-		mapModel.setGroupName(toGroup);
-		mapModelMapper.moveMapUser(mapModel);
+		MapUser user = new MapUser();
+		user.setId(id);
+		user.setUgId(ugId);
+		user.setGroupName(toGroup);
+		mapUserMapper.moveMapUser(user);
 	}
 	
 

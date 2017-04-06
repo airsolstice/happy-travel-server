@@ -21,12 +21,12 @@ public class MapUserController {
 	private MapUserService mapUserService;
 
 	@RequestMapping(value = "/list")
-	public String getMapModelList(HttpServletRequest request, String id) {
+	public String getMapUserList(HttpServletRequest request, String id) {
 		Result result = null;
 		try {
 			List<MapUser> models = (ArrayList<MapUser>) mapUserService
 					.getMapUserList(id);
-			result = new Result(ResultCode.SUCESS, "获取用户好友列表",
+			result = new Result(ResultCode.SUCESS, "获取好友列表",
 					models);
 		} catch (Exception e) {
 			result = new Result(ResultCode.FAIL, "获取失败", null);
@@ -38,12 +38,12 @@ public class MapUserController {
 	}
 
 	@RequestMapping(value = "/message")
-	public String Contact() {
+	public String message() {
 		return "message";
 	}
 
 	@RequestMapping(value = "/add")
-	public String addModel(HttpServletRequest request, String id, String ugId,
+	public String addMapUser(HttpServletRequest request, String id, String ugId,
 			String gName) {
 		Result result = null;
 		try {
@@ -75,10 +75,11 @@ public class MapUserController {
 	}
 
 	@RequestMapping(value = "/update")
-	public String updateMapUserGroupName(HttpServletRequest request, int id,
-			int contactId) {
+	public String updateMapUserGroupName(HttpServletRequest request, String id,
+			String oldName, String newName) {
 		Result result = null;
 		try {
+			mapUserService.updateMapUserGroupName(id,oldName,newName);
 			result = new Result(ResultCode.SUCESS, "更新成功", null);
 		} catch (Exception e) {
 			result = new Result(ResultCode.FAIL, "更新失败", null);
@@ -92,10 +93,10 @@ public class MapUserController {
 
 	@RequestMapping(value = "/move")
 	public String moveMapUser(HttpServletRequest request, String id,
-			String contactId, String toGroup) {
+			String ugId, String toGroup) {
 		Result result = null;
 		try {
-			mapUserService.moveMapUser(id, contactId, toGroup);
+			mapUserService.moveMapUser(id, ugId, toGroup);
 			result = new Result(ResultCode.SUCESS, "移动成功", null);
 		} catch (Exception e) {
 			result = new Result(ResultCode.FAIL, "移动失败", null);

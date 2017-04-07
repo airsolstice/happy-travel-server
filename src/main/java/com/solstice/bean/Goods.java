@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 
 public class Goods {
 	//商品id，自增
-	private int id;
+	private int id = -1;
 	//商品名称
 	private String name;
 	//商品描述

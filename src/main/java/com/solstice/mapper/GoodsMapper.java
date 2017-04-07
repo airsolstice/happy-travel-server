@@ -16,7 +16,7 @@ public interface GoodsMapper {
 	//获取一类型商品的总数
 	public int getCatalogGoodsSum(int catalog);
 	//通过商品名称关键字查找商品
-	public Goods findGoodsByKey(String key);
+	public List<Goods> findGoodsByKey(String key);
 	//添加一个商品
 	public void addGoods(Goods goods);
 	//下架一个商品

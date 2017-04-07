@@ -25,7 +25,7 @@
 	<select id="getCatalogGoodsSum"  parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM tb_goods WHERE catalog = #{catalog}
 	</select>
-	<select id="findGoodsByKey"  parameterType="string" resultType="goods">
+	<select id="findGoodsByKey"  parameterType="string" resultMap="goodsMap">
 		SELECT * FROM tb_goods WHERE name LIKE #{key}
 	</select>	
 	<insert id="addGoods" parameterType="goods">

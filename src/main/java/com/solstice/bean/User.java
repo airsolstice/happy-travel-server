@@ -14,11 +14,11 @@ public class User {
 	//邮箱
 	private String email;
 	//0-保密，1-男，2-女
-	private int sex;
+	private int sex = 0;
 	//手机号码
 	private String phone;
 	//激活状态 1-已激活 ，0-未激活
-	private int status;
+	private int status = 0;
 	//激活码
 	private String activeCode;
 	

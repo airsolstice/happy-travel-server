@@ -4,13 +4,16 @@
 	<select id="findUserByEmail" parameterType="string" resultType="user">
 		SELECT * FROM tb_user WHERE email = #{email}
 	</select>
-	<select id="findUserByUserName" parameterType="string"
+	<select id="findUserByPhone" parameterType="string" resultType="user">
+		SELECT * FROM tb_user WHERE phone = #{phone}
+	</select>
+	<select id="findUserByUserId" parameterType="string"
 		resultType="user">
-		SELECT * FROM tb_user WHERE name = #{name}
+		SELECT * FROM tb_user WHERE id = #{id}
 	</select>
 	<insert id="addUser" parameterType="user">
 		INSERT INTO tb_user(id,name,pwd,active_code,email,sex,phone)
-		VALUES(#{email},#{name},#{pwd},#{activeCode},#{email},#{sex},#{phone})
+		VALUES(#{id},#{name},#{pwd},#{activeCode},#{email},#{sex},#{phone})
 	</insert>
 	<select id="findIdByCode" parameterType="string" resultType="string">
 		SELECT id FROM tb_user WHERE active_code=#{activeCode}

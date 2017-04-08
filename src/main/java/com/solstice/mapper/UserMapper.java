@@ -4,7 +4,8 @@ import com.solstice.bean.User;
 
 public interface UserMapper {
 	public User findUserByEmail(String email);
-	public User findUserByUserName(String name);
+	public User findUserByPhone(String phone);
+	public User findUserByUserId(String id);
 	public void addUser(User user);
 	public String findIdByCode(String activeCode);
 	public void active(String id);

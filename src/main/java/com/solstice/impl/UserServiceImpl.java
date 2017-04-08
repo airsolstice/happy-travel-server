@@ -15,16 +15,27 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	/**
-	 * 根据用户名查找用户
+	 * 根据帐号查找用户
 	 */
-	public void findUserByUserName(String userName) throws UserException {
-		User user = userMapper.findUserByUserName(userName);
+	@Override
+	public void findUserByUserId(String id) throws UserException {
+		User user = userMapper.findUserByUserId(id);
 		if (user != null) {
-			throw new UserException("该用户名已经被注册");
+			throw new UserException("该帐号已经被注册");
 		}
-
 	}
-
+	
+	/**
+	 * 根据手机号查找用户
+	 */
+	@Override
+	public void findUserByUserPhone(String phone) throws UserException {
+		User user = userMapper.findUserByPhone(phone);
+		if (user != null) {
+			throw new UserException("该手机号已经被注册");
+		}
+	}
+	
 	/**
 	 * 根据邮箱查找账号
 	 */
@@ -64,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
 	public User login(User user) throws UserException {
 		// 根据账号查找用户
-		User _user = userMapper.findUserByUserName(user.getName());
+		User _user = userMapper.findUserByUserId(user.getId());
 
 		// 账号不存在
 		if (null == _user) {
@@ -87,7 +98,13 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("该邮箱未注册");
 		}
 	}
-	
+
+	public void checkPhone(String phone) throws UserException{
+		User user = userMapper.findUserByPhone(phone);
+		if(Utils.isEmpty(user)){
+			throw new UserException("该手机号未注册");
+		}
+	}
 	
 	public void updatePwd(String email, String pwd) throws UserException {
 		User user = userMapper.findUserByEmail(email);
@@ -97,6 +114,8 @@ public class UserServiceImpl implements UserService {
 		} else
 			throw new UserException("该邮箱未注册");
 	}
+
+
 
 
 }

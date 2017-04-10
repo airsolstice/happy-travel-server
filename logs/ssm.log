@@ -1,2 +1,0 @@
-d[WARN] [2017-03-31 11:03:43][org.apache.commons.httpclient.HttpMethodBase]Cookie rejected: "$Version=0; safedog-flow-item=14FBD7D52D6BC48235D1BF5FB5116970; $Path=/; $Domain=webchinese.cn". Domain attribute "webchinese.cn" violates RFC 2109: domain must start with a dot
-  

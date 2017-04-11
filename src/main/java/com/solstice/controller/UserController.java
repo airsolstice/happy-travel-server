@@ -4,17 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.solstice.bean.Result;
+import com.solstice.bean.ResultCode;
 import com.solstice.bean.User;
 import com.solstice.exception.UserException;
 import com.solstice.service.UserService;
 import com.solstice.utils.MailUtil;
 import com.solstice.utils.Utils;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -42,14 +48,13 @@ public class UserController {
 		if (Utils.isEmpty(user.getPwd())) {
 			errors.put("pwd", "密码不能为null");
 		} 
-		else if (user.getPwd().trim().length() > 18 || user.getPwd().trim().length() < 6) {
-			errors.put("pwd", "密码长度必须介于6~18之间");
-		}
+
 		// 邮箱的判断
 		if (Utils.isEmpty(user.getEmail())) {
 			errors.put("email", "邮箱不能为null");
 		}
-		else if (!Utils.isEmail(user.getEmail().trim())) {// 邮箱格式为***@**.***
+		// 邮箱格式为***@**.***
+		else if (!Utils.isEmail(user.getEmail().trim())) {
 			errors.put("email", "邮箱格式不正确");
 		}
 		// 手机号的判断
@@ -71,11 +76,11 @@ public class UserController {
 	/*
 	 * 注册 获取基本信息，补全user信息(激活码) 验证输入合法性 验证用户名和邮箱是否已经注册 发送激活码到邮箱 转向登录界面
 	 */
+	@ResponseBody
 	@RequestMapping("/regist")
-	public String regist(HttpServletRequest request, User user) {
-		// 补全代码
-		String activeCode = UUID.randomUUID().toString();
-		user.setActiveCode(activeCode);
+	public String regist(User user) {
+		Result result = null;
+		
 		//根据id的类别，覆盖相应的属性
 		String id = user.getId();
 		if (!Utils.isEmpty(id)){
@@ -91,10 +96,8 @@ public class UserController {
 		Map<String, String> errors = verifyInput(user);		
 		if (errors.size() > 0) {
 			// 保存错误信息
-			request.setAttribute("errors", errors);
-			// 保存用户信息
-			request.setAttribute("user", user);
-			return "regist";
+			result = new Result(ResultCode.FAIL, "注册失败", errors.toString());
+			return result.toString();
 		}
 		
 		try {
@@ -104,30 +107,18 @@ public class UserController {
 			userService.findUserByUserPhone(user.getPhone());
 			//添加用户
 			userService.addUser(user);
-
-			String text = "你正在使用该邮箱进行账号激活，请点击下面的链接完成激活；如不是本人操作，请忽略" + System.getProperty("line.separator", "\n")
-					+ "<a href=\"http://localhost:8080" + request.getContextPath() + "/user/active?activeCode="
-					+ user.getActiveCode() + "\"></a>";
-			MailUtil.sendMail("账号激活", text, new String[] { user.getEmail() });
-
+			result = new Result(ResultCode.SUCESS, "注册成功", null);
 		}
 		catch (UserException e) {
 			e.printStackTrace();
 			// 保存错误信息
-			request.setAttribute("error", e.getMessage());
-			// 保存用户信息
-			request.setAttribute("user", user);
-			return "regist";
+			result = new Result(ResultCode.FAIL, "注册失败", e.getMessage());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		request.setAttribute("message",
-				"请到邮箱" + user.getEmail() + "完成激活操作。如已操作请点击下面的链接去登录" + System.getProperty("line.separator", "\n")
-						+ "<a href=\"http://localhost:8080" + request.getContextPath()
-						+ "/user/toLogin>点击这里去登录</a>");
-		return "message";
+		return result.toString();
 	}
 
 	/*
@@ -150,43 +141,6 @@ public class UserController {
 		return "login";
 	}
 
-	/*
-	 * 登录
-	 */
-	@RequestMapping(value = "/login")
-	public String login(HttpServletRequest request, User user) {
-		Map<String, String> errors = new HashMap<String, String>();
-		// 用户名的判断,可以是手机号或者邮箱
-		if (Utils.isEmpty(user.getId())) {
-			errors.put("id", "用户名不能为null");
-		} else if (!Utils.isEmail(user.getId()) && !Utils.isPhone(user.getId())){
-			errors.put("id", "id只能为邮箱或者手机号");
-		}
-		// 密码的判断
-		if (Utils.isEmpty(user.getPwd())) {
-			errors.put("pwd", "密码不能为null");
-		} else if (user.getPwd().trim().length() > 18 || user.getPwd().trim().length() < 6) {
-			errors.put("pwd", "密码长度必须介于6~18之间");
-		}
-		if (errors.size() > 0) {
-			// 保存错误信息
-			request.setAttribute("errors", errors);
-			// 保存用户信息
-			request.setAttribute("user", user);
-			return "login";
-		}
-		try {
-
-			User _user = userService.login(user);
-			// 保存账号信息到session域中
-			request.getSession().setAttribute("user", _user);
-			return "index";
-		} catch (UserException e) {
-			request.setAttribute("error", e.getMessage());
-			request.setAttribute("user", user);
-			return "login";
-		}
-	}
 
 	/*
 	 * 去找回密码
@@ -296,16 +250,59 @@ public class UserController {
 		}
 	}
 
+
+	@RequestMapping("/index")
+	public String index() {
+		return "index";
+	}
+	
 	// 退出
 	@RequestMapping(value = "/loginOut")
 	public String loginOut(HttpServletRequest request) {
 		// 返回登录界面
 		return "login";
 	}
+	/*
+	 * 登录
+	 */
+	@ResponseBody 
+	@RequestMapping(value = "/login")
+	public String login(HttpServletRequest request, User user) {
+		Result result = null;
+		System.out.println(user.toString());
+		Map<String, String> errors = new HashMap<String, String>();
+		// 用户名的判断,可以是手机号或者邮箱
+		if (Utils.isEmpty(user.getId())) {
+			errors.put("id", "用户名不能为null");
+		} else if (!Utils.isEmail(user.getId()) && !Utils.isPhone(user.getId())){
+			errors.put("id", "id只能为邮箱或者手机号");
+		}
+		// 密码的判断
+		if (Utils.isEmpty(user.getPwd())) {
+			errors.put("pwd", "密码不能为null");
+		}
 
-	@RequestMapping("/index")
-	public String index() {
-		return "index";
+		
+		if (errors.size() > 0) {
+			// 保存错误信息
+			request.setAttribute("errors", errors);
+			result = new Result(ResultCode.FAIL, "登入失败", errors.toString());
+			System.out.println(result.toString());
+			// 保存用户信息
+			request.setAttribute("user", user);
+			return result.toString();
+		}
+		try {
+			User _user = userService.login(user);
+			result = new Result(ResultCode.SUCESS, "登入成功", null);
+			// 保存账号信息到session域中
+			request.getSession().setAttribute("user", _user);
+		} catch (UserException e) {
+			request.setAttribute("error", e.getMessage());
+			result = new Result(ResultCode.FAIL, "登入失败", "密码不正确");
+			request.setAttribute("user", user);
+		}
+		System.out.println(result.toString());
+		return result.toString();
 	}
-
 }

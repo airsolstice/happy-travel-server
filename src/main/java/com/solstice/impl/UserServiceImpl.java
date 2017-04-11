@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("账号未激活");
 		}
 		// 账号与密码不匹配
-		if (!_user.getPwd().equals(Utils.MD5(user.getPwd()))) {
+		if (!_user.getPwd().equals(user.getPwd())) {
 			throw new UserException("账号或密码错误");
 		}
 		return _user;

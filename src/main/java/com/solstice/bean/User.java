@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 
 
 public class User {
-	//用户id，在移动端使用手机号，在web端使用邮箱
+	//用户id，在移动端使用手机号
 	private String id;
 	//用户名
-	private String name;
+	private String name = "新用户";
 	//密码
 	private String pwd;
 	//邮箱
@@ -19,11 +19,21 @@ public class User {
 	private String phone;
 	//激活状态 1-已激活 ，0-未激活
 	private int status = 0;
-	//激活码
-	private String activeCode;
-	
+	//头像链接
+	private String url;
+	//经度
+	private double lat;
+	//纬度
+	private double lng;
+
 	public User(){}
-	
+
+	//用户登入
+	public User(String id, String pwd) {
+		this.id = id;
+		this.pwd = pwd;
+	}
+
 	//用户个人信息获取
 	public User(String id, String name, String email, int sex, String phone){
 		this.id = id;
@@ -43,12 +53,6 @@ public class User {
 	}
 	public void setStatus(int status) {
 		this.status = status;
-	}
-	public String getActiveCode() {
-		return activeCode;
-	}
-	public void setActiveCode(String activeCode) {
-		this.activeCode = activeCode;
 	}
 	public String getName() {
 		return name;
@@ -80,7 +84,31 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
 	@Override
 	public String toString() {
 		return JSONObject.toJSONString(this);

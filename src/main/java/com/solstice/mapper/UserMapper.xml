@@ -12,8 +12,8 @@
 		SELECT * FROM tb_user WHERE id = #{id}
 	</select>
 	<insert id="addUser" parameterType="user">
-		INSERT INTO tb_user(id,name,pwd,active_code,email,sex,phone)
-		VALUES(#{id},#{name},#{pwd},#{activeCode},#{email},#{sex},#{phone})
+		INSERT INTO tb_user(id,name,pwd,email,sex,phone,status)
+		VALUES(#{id},#{name},#{pwd},#{email},#{sex},#{phone},1)
 	</insert>
 	<select id="findIdByCode" parameterType="string" resultType="string">
 		SELECT id FROM tb_user WHERE active_code=#{activeCode}

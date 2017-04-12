@@ -2,11 +2,8 @@ package com.solstice.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +17,6 @@ import com.solstice.exception.UserException;
 import com.solstice.service.UserService;
 import com.solstice.utils.MailUtil;
 import com.solstice.utils.Utils;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 
 @Controller
 @RequestMapping(value = "/user")

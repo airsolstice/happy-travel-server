@@ -8,7 +8,7 @@ public class User {
 	//用户id，在移动端使用手机号
 	private String id;
 	//用户名
-	private String name = "新用户";
+	private String name = "new_user";
 	//密码
 	private String pwd;
 	//邮箱
@@ -17,7 +17,7 @@ public class User {
 	private int sex = 0;
 	//手机号码
 	private String phone;
-	//激活状态 1-已激活 ，0-未激活
+	//状态 1-在线 ，0-离线
 	private int status = 0;
 	//头像链接
 	private String url;
@@ -25,9 +25,16 @@ public class User {
 	private double lat;
 	//纬度
 	private double lng;
-
+	//说明
+	private String note;
 	public User(){}
 
+	
+	public User(String id, int status){
+		this.id = id;
+		this.status = status;
+	}
+	
 	//用户登入
 	public User(String id, String pwd) {
 		this.id = id;
@@ -108,6 +115,16 @@ public class User {
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
+
+	public String getNote() {
+		return note;
+	}
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 
 	@Override
 	public String toString() {

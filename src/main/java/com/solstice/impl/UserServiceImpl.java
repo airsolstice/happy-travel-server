@@ -13,13 +13,13 @@ import com.solstice.utils.Utils;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
-
+	
 	/**
 	 * 根据帐号查找用户
 	 */
 	@Override
-	public void findUserByUserId(String id) throws UserException {
-		User user = userMapper.findUserByUserId(id);
+	public void findUserById(String id) throws UserException {
+		User user = userMapper.findUserById(id);
 		if (user != null) {
 			throw new UserException("该帐号已经被注册");
 		}
@@ -69,26 +69,26 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据id激活账号
 	 */
-	public void active(String id) throws UserException {
-		userMapper.active(id);
+	public void loginOut(String id) throws UserException {
+		User user = new User(id, 0);
+		userMapper.updateStatus(user);
 	}
 
 	public User login(User user) throws UserException {
 		// 根据账号查找用户
-		User _user = userMapper.findUserByUserId(user.getId());
+		User _user = userMapper.findUserById(user.getId());
 
 		// 账号不存在
 		if (null == _user) {
 			throw new UserException("账号不存在");
 		}
-		// 账号停用
-		if (_user.getStatus() == 0) {
-			throw new UserException("账号未激活");
-		}
+
 		// 账号与密码不匹配
 		if (!_user.getPwd().equals(user.getPwd())) {
 			throw new UserException("账号或密码错误");
 		}
+		user.setStatus(1);
+		userMapper.updateStatus(user);
 		return _user;
 	}
 
@@ -106,16 +106,42 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	public void updatePwd(String email, String pwd) throws UserException {
-		User user = userMapper.findUserByEmail(email);
+	public void updatePwd(String id, String pwd) throws UserException {
+		User user = userMapper.findUserById(id);
 		if (!Utils.isEmpty(user)) {
 			user.setPwd(pwd);
 			userMapper.updatePwd(user);
 		} else
-			throw new UserException("该邮箱未注册");
+			throw new UserException("该id不存在");
 	}
 
+	@Override
+	public void updatePwdByPhone(String phone, String pwd) throws UserException {
+		User user = userMapper.findUserByPhone(phone);
+		if (!Utils.isEmpty(user)) {
+			user.setPwd(pwd);
+			userMapper.updatePwdByPhone(user);
+		} else
+			throw new UserException("该手机号码未注册");		
+	}
 
+	@Override
+	public void updatePwdByEmail(String email, String pwd) throws UserException {
+		User user = userMapper.findUserByEmail(email);
+		if (!Utils.isEmpty(user)) {
+			user.setPwd(pwd);
+			userMapper.updatePwdByPhone(user);
+		} else
+			throw new UserException("该邮箱未注册");	
+	}
 
+	@Override
+	public boolean isExist(String id) {
+		User user = userMapper.findUserById(id);
+		if(user != null){
+			return true;
+		}
+		return false;
+	}
 
 }

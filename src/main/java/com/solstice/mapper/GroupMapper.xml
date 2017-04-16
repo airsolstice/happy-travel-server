@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.solstice.mapper.GroupMapper">
+	<resultMap id="baseResultMap" type="group">
+	    <result column="no" jdbcType="INTEGER" property="no"/>
+        <result column="id" jdbcType="CHAR" property="id"/>
+        <result column="fid" jdbcType="CHAR" property="fid"/>
+        <result column="gname" jdbcType="CHAR" property="groupName"/>
+    </resultMap>
+    
+	<select id="getGroupListById" resultMap="baseResultMap" parameterType="string" >
+		SELECT * FROM tb_group WHERE id = #{id} ORDER BY gname
+	</select>
+	<insert id="addUser" parameterType="group">
+		INSERT INTO tb_group(id,fid,gname) VALUES(#{id},#{fid},#{groupName})
+	</insert>
+	<select id="findGroupUser" resultType="group" parameterType="group" >
+		SELECT * FROM tb_group WHERE id = #{id} AND fid = #{fid}
+	</select>
+	<delete id="deleteUserFromGroup" parameterType="group">
+		DELETE FROM tb_group WHERE id = #{id} AND fid = #{fid}
+	</delete>
+	<update id="updateGroupName" >
+		UPDATE tb_group SET gname = #{2} WHERE id = #{0} AND gname = #{1}
+	</update>
+	<select id="getGroupName" resultType="string" parameterType="group" >
+		SELECT gname FROM tb_group WHERE id = #{id} AND fid = #{fid}
+	</select>
+	<update id="moveUser" parameterType="group">
+		UPDATE tb_group SET gname = #{groupName} WHERE id = #{id} AND fid = #{fid}
+	</update>
+</mapper>

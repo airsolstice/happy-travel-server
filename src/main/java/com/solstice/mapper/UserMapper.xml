@@ -7,21 +7,27 @@
 	<select id="findUserByPhone" parameterType="string" resultType="user">
 		SELECT * FROM tb_user WHERE phone = #{phone}
 	</select>
-	<select id="findUserByUserId" parameterType="string"
+	<select id="findUserById" parameterType="string"
 		resultType="user">
 		SELECT * FROM tb_user WHERE id = #{id}
 	</select>
 	<insert id="addUser" parameterType="user">
-		INSERT INTO tb_user(id,name,pwd,email,sex,phone,status)
-		VALUES(#{id},#{name},#{pwd},#{email},#{sex},#{phone},1)
+		INSERT INTO tb_user(id,name,pwd,email,sex,phone,status,url)
+		VALUES(#{id},#{name},#{pwd},#{email},#{sex},#{phone},#{status},#{url})
 	</insert>
 	<select id="findIdByCode" parameterType="string" resultType="string">
 		SELECT id FROM tb_user WHERE active_code=#{activeCode}
 	</select>
-	<update id="active" parameterType="string">
-		UPDATE tb_user SET status = 1 WHERE id = #{id}
+	<update id="updateStatus" parameterType="user">
+		UPDATE tb_user SET status = #{status} WHERE id = #{id}
 	</update>
 	<update id="updatePwd" parameterType="user">
 		UPDATE tb_user SET pwd = #{pwd} WHERE id = #{id}
+	</update>
+	<update id="updatePwdByPhone" parameterType="user">
+		UPDATE tb_user SET pwd = #{pwd} WHERE phone = #{phone}
+	</update>
+	<update id="updatePwdByEmail" parameterType="user">
+		UPDATE tb_user SET pwd = #{pwd} WHERE email = #{email}
 	</update>
 </mapper>

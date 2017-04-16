@@ -54,5 +54,4 @@ public class Result {
 	public String toString() {
 		return JSONObject.toJSONString(this);
 	}
-
 }

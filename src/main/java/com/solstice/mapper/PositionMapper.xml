@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.solstice.mapper.PositionMapper">
+	<resultMap id="baseResultMap" type="position">
+	    <result column="no" jdbcType="INTEGER" property="no"/>
+        <result column="id" jdbcType="CHAR" property="id"/>
+        <result column="lat" jdbcType="DOUBLE" property="lat"/>
+        <result column="lng" jdbcType="DOUBLE" property="lng"/>
+        <result column="time" jdbcType="DATE" property="time"/>
+    </resultMap>
+    
+	<select id="getPositionTraceById" resultMap="baseResultMap" parameterType="string" >
+		SELECT * FROM tb_position WHERE id = #{id} ORDER BY time
+	</select>
+	<select id="getLastPositionById" resultType="position" parameterType="string" >
+		SELECT * FROM tb_position WHERE id = #{id} ORDER BY time DESC LIMIT 1;
+	</select>
+	<insert id="updatePosition" parameterType="position">
+		INSERT INTO tb_position(id,lat,lng,time) VALUES(#{id},#{lat},#{lng},#{time})
+	</insert>
+
+</mapper>

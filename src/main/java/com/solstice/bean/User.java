@@ -27,6 +27,9 @@ public class User {
 	private double lng;
 	//说明
 	private String note;
+	
+	private int chatId;
+	
 	public User(){}
 
 	
@@ -123,6 +126,16 @@ public class User {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+
+	public int getChatId() {
+		return chatId;
+	}
+
+
+	public void setChatId(int chatId) {
+		this.chatId = chatId;
 	}
 
 

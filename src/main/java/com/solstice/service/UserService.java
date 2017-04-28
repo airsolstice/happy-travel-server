@@ -17,4 +17,7 @@ public interface UserService {
 	public void updatePwdByEmail(String email,String pwd)throws UserException;
 	public void checkEmail(String email) throws UserException;
 	public void checkPhone(String phone) throws UserException;
+	public User getUserInfo(String id) throws UserException;
+	public int getChatId(String id) throws UserException;
+	public User getUserInfoByChatId(int chatId) throws UserException;
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.solstice.bean.Group;
 import com.solstice.bean.Result;
@@ -24,7 +25,8 @@ public class GroupController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/list")
+	@ResponseBody
+	@RequestMapping(value = "/list", produces = "application/json; charset=utf-8")
 	public String getGroupList(HttpServletRequest request, String id) {
 		Result result = null;
 		try {
@@ -40,11 +42,12 @@ public class GroupController {
 			result = new Result(ResultCode.FAIL, "获取失败", e.getMessage());
 			e.printStackTrace();
 		}
-
+		System.out.println(result.toString());
 		return result.toString();
 	}
 
-	@RequestMapping(value = "/add")
+	@ResponseBody
+	@RequestMapping(value = "/add", produces = "application/json; charset=utf-8")
 	public String addUser(HttpServletRequest request, String id, String fid, String gname) {
 		Result result = null;
 		try {
@@ -65,7 +68,8 @@ public class GroupController {
 		return result.toString();
 	}
 
-	@RequestMapping(value = "/delete")
+	@ResponseBody
+	@RequestMapping(value = "/delete", produces = "application/json; charset=utf-8")
 	public String delteteUserFromGroup(HttpServletRequest request, String id, String fid) {
 		Result result = null;
 		try {
@@ -85,7 +89,8 @@ public class GroupController {
 		return result.toString();
 	}
 
-	@RequestMapping(value = "/update")
+	@ResponseBody
+	@RequestMapping(value = "/update", produces = "application/json; charset=utf-8")
 	public String updateGroupName(HttpServletRequest request, String id, String oldName, String newName) {
 		Result result = null;
 		try {
@@ -107,7 +112,8 @@ public class GroupController {
 		return result.toString();
 	}
 
-	@RequestMapping(value = "/move")
+	@ResponseBody
+	@RequestMapping(value = "/move", produces = "application/json; charset=utf-8")
 	public String moveMapUser(HttpServletRequest request, String id, String fid, String gname) {
 		Result result = null;
 		try {

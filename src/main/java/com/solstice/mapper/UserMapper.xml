@@ -1,33 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.solstice.mapper.UserMapper">
-	<select id="findUserByEmail" parameterType="string" resultType="user">
+	<resultMap id="baseResultMap" type="user">
+		<result column="id" jdbcType="CHAR" property="id" />
+		<result column="name" jdbcType="CHAR" property="name" />
+		<result column="pwd" jdbcType="CHAR" property="pwd" />
+		<result column="email" jdbcType="CHAR" property="email" />
+		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="phone" jdbcType="CHAR" property="phone" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="url" jdbcType="CHAR" property="url" />
+		<result column="lat" jdbcType="DOUBLE" property="lat" />
+		<result column="lng" jdbcType="DOUBLE" property="lng" />
+		<result column="note" jdbcType="CHAR" property="note" />			
+		<result column="chat_id" jdbcType="INTEGER" property="chatId" />	
+	</resultMap>
+	<select id="findUserByEmail" parameterType="string" resultMap="baseResultMap">
 		SELECT * FROM tb_user WHERE email = #{email}
 	</select>
-	<select id="findUserByPhone" parameterType="string" resultType="user">
+	<select id="findUserByPhone" parameterType="string" resultMap="baseResultMap">
 		SELECT * FROM tb_user WHERE phone = #{phone}
 	</select>
-	<select id="findUserById" parameterType="string"
-		resultType="user">
+	<select id="findUserById" parameterType="string" resultMap="baseResultMap">
 		SELECT * FROM tb_user WHERE id = #{id}
 	</select>
+	<select id="findUserByChatId" parameterType="int" resultMap="baseResultMap">
+		SELECT * FROM tb_user WHERE chat_id = #{chatId}
+	</select>
+	<select id="getChatIdById" parameterType="string" resultType="int">
+		SELECT chat_id FROM tb_user WHERE id = #{id}
+	</select>
 	<insert id="addUser" parameterType="user">
-		INSERT INTO tb_user(id,name,pwd,email,sex,phone,status,url)
+		INSERT INTO
+		tb_user(id,name,pwd,email,sex,phone,status,url)
 		VALUES(#{id},#{name},#{pwd},#{email},#{sex},#{phone},#{status},#{url})
 	</insert>
 	<select id="findIdByCode" parameterType="string" resultType="string">
 		SELECT id FROM tb_user WHERE active_code=#{activeCode}
 	</select>
 	<update id="updateStatus" parameterType="user">
-		UPDATE tb_user SET status = #{status} WHERE id = #{id}
+		UPDATE tb_user SET
+		status = #{status} WHERE id = #{id}
 	</update>
 	<update id="updatePwd" parameterType="user">
-		UPDATE tb_user SET pwd = #{pwd} WHERE id = #{id}
+		UPDATE tb_user SET pwd =
+		#{pwd} WHERE id = #{id}
 	</update>
 	<update id="updatePwdByPhone" parameterType="user">
-		UPDATE tb_user SET pwd = #{pwd} WHERE phone = #{phone}
+		UPDATE tb_user SET
+		pwd = #{pwd} WHERE phone = #{phone}
 	</update>
 	<update id="updatePwdByEmail" parameterType="user">
-		UPDATE tb_user SET pwd = #{pwd} WHERE email = #{email}
+		UPDATE tb_user SET
+		pwd = #{pwd} WHERE email = #{email}
 	</update>
 </mapper>

@@ -144,4 +144,20 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public User getUserInfo(String id) throws UserException {
+		return userMapper.findUserById(id);
+	}
+
+	@Override
+	public int getChatId(String id) throws UserException {
+		return userMapper.getChatIdById(id);
+	}
+
+	@Override
+	public User getUserInfoByChatId(int chatId) throws UserException {
+		return userMapper.findUserByChatId(chatId);
+	}
+
+
 }

@@ -12,4 +12,6 @@ public interface UserMapper {
 	public void updatePwd(User user);
 	public void updatePwdByPhone(User user);
 	public void updatePwdByEmail(User user);
+	public int getChatIdById(String id);
+	public User findUserByChatId(int chatId);
 }

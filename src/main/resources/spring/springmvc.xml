@@ -40,10 +40,10 @@
 	</task:scheduled-tasks>  -->
 	
 	<!-- 拦截器 -->
- 	 <mvc:interceptors>
+<!--  	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean class="com.solstice.interceptor.LoginInterceptor"/>			
 		</mvc:interceptor>
-	</mvc:interceptors> 
+	</mvc:interceptors>  -->
 </beans>

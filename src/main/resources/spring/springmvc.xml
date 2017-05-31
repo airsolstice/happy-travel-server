@@ -20,6 +20,8 @@
 	<mvc:annotation-driven />
 	 <!-- 配置注解扫描 -->    
 	<context:annotation-config />
+	<!--对静态资源文件的访问-->
+    <mvc:default-servlet-handler/>
 	<!-- 默认扫描的包路径 --> 
 	<context:component-scan base-package="com.solstice" > 
 	</context:component-scan>    
@@ -33,6 +35,17 @@
 		<!-- 配置jsp路径的后缀 -->
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	
+	 <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="utf-8" />
+        <!-- 文件大小最大值 -->
+        <property name="maxUploadSize" value="10485760000" />
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="40960" />
+    </bean>
+	
 	<!-- 定时器
 	<task:annotation-driven/>
 	<task:scheduled-tasks> 

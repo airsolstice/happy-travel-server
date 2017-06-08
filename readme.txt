@@ -1,1 +1,1 @@
-﻿这是一个毕业设计的项目，前端使用android平台，实现IM和地图的LBS业务，后端使用ssm框架进行开发
+This is a graduate design project that using the android platform on the front-end to implement the LBS business for IM and maps, and the back-end uses the SSM framework for development

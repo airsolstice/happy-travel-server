@@ -1,8 +1,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
 		http://www.springframework.org/schema/mvc 
@@ -16,47 +16,37 @@
 		http://www.springframework.org/schema/task   
     	http://www.springframework.org/schema/task/spring-task.xsd ">
 
-	  <!-- 添加注解驱动 -->  
+	<!-- 添加spring mvc注解驱动 -->
 	<mvc:annotation-driven />
-	 <!-- 配置注解扫描 -->    
+	<!-- 配置注解扫描 -->
 	<context:annotation-config />
-	<!--对静态资源文件的访问-->
-    <mvc:default-servlet-handler/>
-	<!-- 默认扫描的包路径 --> 
-	<context:component-scan base-package="com.solstice" > 
-	</context:component-scan>    
-	<!-- 视图解析器
-	解析jsp解析，默认使用jstl标签，classpath下的得有jstl的包
-	 -->
+	<!--对静态资源文件的访问 -->
+	<mvc:default-servlet-handler />
+	<!-- 扫描使用注解的类所在的包路径 -->
+	<context:component-scan base-package="com.solstice"/>
+	<!-- 视图解析器 解析jsp解析，默认使用jstl标签，classpath下的得有jstl的包 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 配置jsp路径的前缀 -->
-		<property name="prefix" value="/WEB-INF/jsps/"/>
+		<property name="prefix" value="/WEB-INF/jsps/" />
 		<!-- 配置jsp路径的后缀 -->
-		<property name="suffix" value=".jsp"/>
+		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	 <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- 默认编码 -->
-        <property name="defaultEncoding" value="utf-8" />
-        <!-- 文件大小最大值 -->
-        <property name="maxUploadSize" value="10485760000" />
-        <!-- 内存中的最大值 -->
-        <property name="maxInMemorySize" value="40960" />
-    </bean>
-	
-	<!-- 定时器
-	<task:annotation-driven/>
-	<task:scheduled-tasks> 
-	     <task:scheduled ref="myTaskService" method="check" cron="0/1 * * * * ?"/>
-	</task:scheduled-tasks>  -->
-	
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+
+	<!-- 定时器 <task:annotation-driven/> <task:scheduled-tasks> <task:scheduled 
+		ref="myTaskService" method="check" cron="0/1 * * * * ?"/> </task:scheduled-tasks> -->
+
 	<!-- 拦截器 -->
-<!--  	 <mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<bean class="com.solstice.interceptor.LoginInterceptor"/>			
-		</mvc:interceptor>
-	</mvc:interceptors>  -->
+	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> <bean 
+		class="com.solstice.interceptor.LoginInterceptor"/> </mvc:interceptor> </mvc:interceptors> -->
 </beans>
